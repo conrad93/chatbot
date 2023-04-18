@@ -1,11 +1,15 @@
 import './App.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import getResponse from './api/getResponse';
 
 function App() {
   const [inputVal, setInputVal] = useState("");
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [data]);
 
   async function onSubmit(){
     setIsLoading(true);
@@ -16,13 +20,12 @@ function App() {
     }
     setIsLoading(false);
     setInputVal("");
-    setTimeout(() => scrollToBottom(), 1000);
   }
 
   function scrollToBottom(){
     document.getElementById("main").scrollTo(
       0,
-      document.getElementById("main").scrollHeight + 500
+      document.getElementById("main").scrollHeight
     );
   }
 
