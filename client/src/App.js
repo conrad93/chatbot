@@ -13,10 +13,10 @@ function App() {
 
   async function onSubmit(){
     setIsLoading(true);
-    setData(oldData => [...oldData,{type: "user", message: inputVal}]);
-    let res = await getResponse({message: inputVal});
+    setData(oldData => [...oldData,{role: "user", content: inputVal}]);
+    let res = await getResponse({messages: data});
     if(res){
-      setData(oldData => [...oldData,{type: "bot", message: res.response}]);
+      setData(oldData => [...oldData,{type: "assistant", content: res.response}]);
     }
     setIsLoading(false);
     setInputVal("");
@@ -38,14 +38,14 @@ function App() {
   return (
     <div id='main' className="h-screen bg-gray-700 py-4 overflow-auto px-8 py-2">
       {data.map((el,idx) => {
-        if(el.type === 'user'){
+        if(el.role === 'user'){
           return(
             <div key={idx} className="flex justify-end items-center">
               <div className="max-w-xl">
                 <small className="text-gray-600">{el.type}</small>
                 <div className="bg-gray-600 rounded-tl-xl rounded-tr-xl rounded-bl-xl p-3 mb-2">
                   <p className="text-base font-medium text-white">
-                    {el.message}
+                    {el.content}
                   </p>
                 </div>
               </div>
@@ -58,7 +58,7 @@ function App() {
                 <small className="text-gray-600">{el.type}</small>
                 <div className="bg-gray-600 rounded-tl-xl rounded-tr-xl rounded-br-xl p-3 mb-2">
                   <p className="text-base font-medium text-white">
-                    {el.message}
+                    {el.content}
                   </p>
                 </div>
               </div>
